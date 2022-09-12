@@ -1,0 +1,308 @@
+{{ 'component-gallery-with-text.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<gallery-with-text class="gallery-with-text"
+    {% if section.settings.gallery_desktop == "right" %} style="flex-direction: row-reverse;" {% endif %}
+    data-speed="{{ section.settings.execution_interval }}"
+    data-autoplay="{{ section.settings.autoplay }}">
+    <div class="gallery-with-text__gallery"
+        style="width: {{ section.settings.gallery_width }}%;">
+        <div class="gallery-container">
+            {%- for block in section.blocks -%}
+                {%- case block.type -%}
+                    {%- when 'image' -%}
+                    <div class="image-container">
+                        {%- if block.settings.image != blank -%}
+                            <img
+                            srcset="{%- if block.settings.image.width >= 165 -%}{{ block.settings.image | image_url: width: 165 }} 165w,{%- endif -%}
+                                {%- if block.settings.image.width >= 360 -%}{{ block.settings.image | image_url: width: 360 }} 360w,{%- endif -%}
+                                {%- if block.settings.image.width >= 535 -%}{{ block.settings.image | image_url: width: 535 }} 535w,{%- endif -%}
+                                {%- if block.settings.image.width >= 750 -%}{{ block.settings.image | image_url: width: 750 }} 750w,{%- endif -%}
+                                {%- if block.settings.image.width >= 1070 -%}{{ block.settings.image | image_url: width: 1070 }} 1070w,{%- endif -%}
+                                {%- if block.settings.image.width >= 1500 -%}{{ block.settings.image | image_url: width: 1500 }} 1500w,{%- endif -%}
+                                {{ block.settings.image | image_url }} {{ block.settings.image.width }}w"
+                            src="{{ block.settings.image | image_url: width: 1500 }}"
+                            alt="{{ block.settings.image.alt | escape }}"
+                            loading="lazy"
+                            width="{{ block.settings.image.width }}"
+                            height="{{ block.settings.image.height }}"
+                            >
+                        {%- else -%}
+                            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                        {%- endif -%}
+                    </div>
+                {%- endcase -%}
+            {%- endfor -%}
+        </div>
+        <div class="gallery-with-text__controls">
+            <button class="controls__button left">
+                {% if section.settings.arrows == "minimal" %}
+                    {% render 'minimal-button' %}
+                {% elsif section.settings.arrows == "classic" %}
+                    {% render 'classic-button' %}
+                {% else %}
+                    {% render 'circle-button' %}
+                {% endif %}
+            </button>
+
+            <button class="controls__button right">
+                {% if section.settings.arrows == "minimal" %}
+                    {% render 'minimal-button', flipped: true %}
+                {% elsif section.settings.arrows == "classic" %}
+                    {% render 'classic-button', flipped: true %}
+                {% else %}
+                    {% render 'circle-button', flipped: true %}
+                {% endif %}
+            </button>
+        </div>
+    </div>
+    <div class="gallery-with-text__text"
+        style="width: calc(100% - {{ section.settings.gallery_width }}%)">
+        {% if section.settings.heading %}
+            <h2 class="{{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
+        {% endif %}
+
+        {% if section.settings.caption %}
+            <p class="{{ section.settings.caption_size }}">{{ section.settings.caption }}</p>
+        {% endif %}
+    </div>
+</gallery-with-text>
+
+
+
+<script>
+/* Immediately invoke to keep variables in scope */
+(() => {
+    let PARENT_GALLERY = document.querySelector("#shopify-section-{{ section.id }} > gallery-with-text");
+    let CONTROLS_BUTTONS = PARENT_GALLERY.querySelectorAll(".controls__button");
+
+    if (Shopify.designMode) {
+        document.addEventListener("shopify:section:load", function (event) {
+            setTimeout(() => {
+                let ADJACENT_GALLERY = event.target.querySelector('gallery-with-text');
+                let ADJACENT_CONTROLS_BUTTONS = event.target.querySelectorAll(".controls__button");
+                PARENT_GALLERY = document.querySelector("#shopify-section-{{ section.id }} > gallery-with-text");
+                CONTROLS_BUTTONS = PARENT_GALLERY.querySelectorAll(".controls__button");
+                initialLoad(ADJACENT_GALLERY, ADJACENT_CONTROLS_BUTTONS);
+                initialLoad(PARENT_GALLERY, CONTROLS_BUTTONS);
+            }, 500)
+        });
+    }
+
+    setTimeout(() => {
+        initialLoad(PARENT_GALLERY, CONTROLS_BUTTONS);
+    }, 300)
+
+    function initialLoad(gallery, buttons) {
+        gallery.loadGallery();
+        buttons.forEach(button => {
+        button.addEventListener("click", () => {
+            if (button.classList.contains("left")) gallery.onButtonClick("left")
+            else gallery.onButtonClick("right");
+        })})
+    }    
+})();
+</script>
+
+
+
+{% schema %}
+{
+  "name": "Gallery with text",
+  "class": "section",
+  "settings": [
+    {
+        "type": "header",
+        "content": "Content"
+    },
+    {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Gallery with text"
+    },
+    {
+        "type": "text",
+        "id": "caption",
+        "label": "Caption",
+        "default": "Fill this section with text and pair it with blocks of related images that will autoplay"
+    },
+    {
+        "type": "select",
+        "id": "heading_size",
+        "label": "Heading size",
+        "options": [
+            {
+                "value": "heading-small",
+                "label": "Small"
+            },
+            {
+                "value": "heading-medium",
+                "label": "Medium"
+            },
+            {
+                "value": "heading-large",
+                "label": "Large"
+            }
+        ],
+        "default": "heading-medium"
+    },
+    {
+        "type": "select",
+        "id": "caption_size",
+        "label": "Caption size",
+        "options": [
+            {
+                "value": "caption-small",
+                "label": "Small"
+            },
+            {
+                "value": "caption-medium",
+                "label": "Medium"
+            },
+            {
+                "value": "caption-large",
+                "label": "Large"
+            }
+        ],
+        "default": "caption-medium"
+    },
+    {
+        "type": "header",
+        "content": "Gallery"
+    },
+    {
+        "type": "select",
+        "id": "arrows",
+        "label": "Arrow type",
+        "options": [
+            {
+                "value": "minimal",
+                "label": "Minimal"
+            },
+            {
+                "value": "classic",
+                "label": "Classic"
+            },
+            {
+                "value": "circle",
+                "label": "Circle"
+            }
+        ],
+        "default": "circle"
+    },
+    {
+        "type": "color",
+        "id": "arrow_color",
+        "label": "Arrow color",
+        "default": "#1B1B1B"
+    },
+    {
+        "type": "select",
+        "id": "gallery_desktop",
+        "label": "Desktop gallery placement",
+        "options": [
+            {
+                "value": "left",
+                "label": "Left"
+            },
+            {
+                "value": "right",
+                "label": "Right"
+            }
+        ],
+        "default": "left"
+    },
+    {
+        "type": "select",
+        "id": "gallery_width",
+        "label": "Gallery width",
+        "options": [
+            {
+                "value": "33",
+                "label": "33%"
+            },
+            {
+                "value": "50",
+                "label": "50%"
+            },
+            {
+                "value": "60",
+                "label": "60%"
+            },
+            {
+                "value": "66",
+                "label": "66%"
+            }
+        ],
+        "default": "60"
+    },
+    {
+        "type": "header",
+        "content": "Autoplay"
+    },
+    {
+        "type": "paragraph",
+        "content": "May need to save changes for new autoplay settings to take effect."
+    },
+    {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Autoplay images",
+        "default": true
+    },
+    {
+        "type": "range",
+        "id": "execution_interval",
+        "min": 3,
+        "max": 10,
+        "step": 1,
+        "unit": "s",
+        "label": "Change image every",
+        "default": 5
+    }
+  ],
+  "blocks": [
+    {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+            {
+                "type": "image_picker",
+                "id": "image",
+                "label": "Image"
+            }
+        ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Gallery with text",
+      "blocks": [
+        {
+            "type": "image"
+        },
+        {
+            "type": "image"
+        },
+        {
+            "type": "image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

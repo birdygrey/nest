@@ -1,0 +1,5 @@
+{% if flipped != true %}
+    <svg width="48" height="48" x="0" y="0" viewBox="0 0 32 32" style="enable-background:new 0 0 512 512" xml:space="preserve"><g transform="matrix(-1,0,0,1,31.70710849761963,0)"><g xmlns="http://www.w3.org/2000/svg" id="arrow,-next,-right,-skip" fill="{{ section.settings.arrow_color }}" fill-rule="evenodd"><path id="Path" d="m9.29289322 5.70710678 1.41421358-1.41421356 11.7071068 11.70710678-11.7071068 11.7071068-1.41421358-1.4142136 10.29210678-10.2928932z" fill="{{ section.settings.arrow_color }}" fill-rule="nonzero" data-original="#000000"/></g></g></svg>
+{% else %}
+    <svg height="48" viewBox="0 0 32 32" width="48"><g id="arrow,-next,-right,-skip" fill="{{section.settings.arrow_color}}" fill-rule="evenodd"><path id="Path" d="m9.29289322 5.70710678 1.41421358-1.41421356 11.7071068 11.70710678-11.7071068 11.7071068-1.41421358-1.4142136 10.29210678-10.2928932z" fill="{{ section.settings.arrow_color }}" fill-rule="nonzero"/></g></svg>
+{% endif %}
