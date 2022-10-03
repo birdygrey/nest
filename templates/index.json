@@ -215,16 +215,19 @@
         "16647693281c6614a8-0": {
           "type": "image",
           "settings": {
+            "image": "shopify:\/\/shop_images\/model-with-leather-jacket-over-shoulders.jpg"
           }
         },
         "16647693281c6614a8-1": {
           "type": "image",
           "settings": {
+            "image": "shopify:\/\/shop_images\/model-in-neutral-colors-by-window.jpg"
           }
         },
         "16647693281c6614a8-2": {
           "type": "image",
           "settings": {
+            "image": "shopify:\/\/shop_images\/fashion-model-in-fur.jpg"
           }
         }
       },
@@ -234,15 +237,15 @@
         "16647693281c6614a8-2"
       ],
       "settings": {
-        "heading": "Gallery with text",
+        "heading": "WOMEN'S FASHION",
         "caption": "Fill this section with text and pair it with blocks of related images that will autoplay",
-        "heading_size": "heading-medium",
-        "caption_size": "caption-medium",
-        "arrows": "circle",
-        "arrow_color": "#1B1B1B",
-        "gallery_desktop": "left",
-        "gallery_width": "60",
-        "autoplay": true,
+        "heading_size": "heading-large",
+        "caption_size": "caption-large",
+        "arrows": "minimal",
+        "arrow_color": "#ffffff",
+        "gallery_desktop": "right",
+        "gallery_width": "50",
+        "autoplay": false,
         "execution_interval": 5
       }
     }
