@@ -1,5 +1,54 @@
 {
   "sections": {
+    "section_text_with_gallery_fQN7Un": {
+      "type": "section-text-with-gallery",
+      "blocks": {
+        "image_Fb9UU7": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/waterfall-by-ruins.jpg"
+          }
+        },
+        "image_gjbqzK": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/northern-forest.jpg"
+          }
+        },
+        "image_yHUVDK": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/nature-mountains-flower-landscape-adventure.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "image_Fb9UU7",
+        "image_gjbqzK",
+        "image_yHUVDK"
+      ],
+      "settings": {
+        "full_width": false,
+        "reverse": false,
+        "bg_color": "#ffffff",
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "padding_top_mobile": 36,
+        "padding_bottom_mobile": 36,
+        "vertical_align": "center",
+        "text_align": "left",
+        "title": "Section title goes here",
+        "title_font_size": 40,
+        "title_font_size_mobile": 30,
+        "content": "<p>Text content goes here.<\/p>",
+        "btn_text": "Button Text",
+        "btn_url": "#",
+        "effect": "fade",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "hide_arrows": false
+      }
+    },
     "image_banner": {
       "type": "image-banner",
       "blocks": {
@@ -211,6 +260,7 @@
     }
   },
   "order": [
+    "section_text_with_gallery_fQN7Un",
     "image_banner",
     "rich_text",
     "featured_collection",

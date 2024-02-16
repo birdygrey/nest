@@ -1,0 +1,20 @@
+{%- assign size_length = size | split: 'x' | size -%}
+
+{%- assign icon_width = size | split: 'x' | first | default: 'auto' -%}
+{%- assign icon_height = 'auto' -%}
+
+{%- if size_length == 2 -%}
+  {%- assign icon_height = size | split: 'x' | last | default: 'auto' -%}
+{%- endif -%}
+
+{% case icon %}
+  {% when 'chevron-left' %}
+    <svg width="{{- icon_width -}}" height="{{- icon_height -}}" viewBox='0 0 12 22' fill='none' xmlns='http://www.w3.org/2000/svg'>
+      <path d="M10.6667 20.3333L2 11L10.6667 1.66665" stroke="#242424" stroke-width="1.5" stroke-linecap="square"/>
+    </svg>
+
+  {% when 'chevron-right' %}
+    <svg width="{{- icon_width -}}" height="{{- icon_height -}}" viewBox='0 0 10 18' fill='none' xmlns='http://www.w3.org/2000/svg'>
+      <path d="M2 16L8.5 9L2 2" stroke="#242424" stroke-width="1.5" stroke-linecap="square"/>
+    </svg>
+{% endcase %}
