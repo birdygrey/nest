@@ -1,0 +1,46 @@
+slider-gallery {
+  position: relative;
+}
+
+slider-gallery .slider__image {
+  position: relative;
+  padding-top: 100%;
+}
+
+slider-gallery .slider__image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+slider-gallery .swiper-button-prev svg,
+slider-gallery .swiper-button-next svg {
+  width: auto;
+  height: auto;
+}
+
+slider-gallery .swiper-button-prev:after,
+slider-gallery .swiper-button-next:after {
+  display: none;
+}
+
+slider-gallery .swiper-button-prev,
+slider-gallery .swiper-button-next {
+  display: block;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, .6);
+  transition: background-color .3s;
+}
+
+slider-gallery .swiper-button-prev:hover,
+slider-gallery .swiper-button-next:hover {
+  background-color: rgba(255, 255, 255, 1);
+}

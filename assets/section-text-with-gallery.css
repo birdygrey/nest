@@ -1,0 +1,104 @@
+.section-text-with-gallery {
+  position: relative;
+  overflow: hidden;
+}
+
+.section-text-with-gallery .section__inner {
+  display: flex;
+  align-items: center;
+}
+
+.section-text-with-gallery .section__content {
+  width: 50%;
+  padding-right: 30px;
+}
+
+.section-text-with-gallery .section__images {
+  width: 50%;
+}
+
+.section-text-with-gallery .section__title {
+  margin: 20px 0;
+}
+
+.section-text-with-gallery .section__actions {
+  margin-top: 20px;
+}
+
+/* Gallery Fullwidth -- Start */
+
+@media(min-width: 768px) {
+  .section-text-with-gallery--fullwidth .section__images {
+    position: relative;
+  }
+
+  .section-text-with-gallery--fullwidth .section__images-inner {
+    padding-top: 100%;
+  }
+
+  .section-text-with-gallery--fullwidth .section__images-wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: calc(50vw - 5px);
+  }
+
+  .section-text-with-gallery--fullwidth slider-gallery {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+  }
+
+  .section-text-with-gallery--fullwidth slider-gallery .slider__image {
+    padding-top: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .section-text-with-gallery--fullwidth slider-gallery .swiper {
+    height: 100%;
+  }
+}
+
+/* Gallery Fullwidth -- END */
+
+/* Gallery Reverse -- Start */
+
+.section-text-with-gallery--reverse .section__content {
+  order: 2;
+  padding-left: 30px;
+  padding-right: 0;
+}
+
+/* Gallery Reverse -- END */
+
+.section-text-with-gallery--fullwidth.section-text-with-gallery--reverse .section__images-wrapper {
+  left: auto;
+  right: 0;
+}
+
+@media(max-width: 767px) {
+  .section-text-with-gallery .section__inner {
+    flex-wrap: wrap;
+  }
+
+  .section-text-with-gallery .section__content {
+    width: 100%;
+    padding: 30px 0;
+  }
+
+  .section-text-with-gallery .section__images {
+    width: 100%;
+  }
+
+  .section-text-with-gallery .section__images-inner {
+    margin: 0 -20px;
+  }
+
+  .section-text-with-gallery .section__title {
+    margin: 0 0 15px;
+  }
+}

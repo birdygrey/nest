@@ -1,0 +1,297 @@
+{{ 'section-text-with-gallery.css' | asset_url | stylesheet_tag }}
+{{ 'slider-gallery.css' | asset_url | stylesheet_tag }}
+
+{%- assign _section = section.settings -%}
+{%- assign _blocks = section.blocks -%}
+
+<style>
+  .section-text-with-gallery--{{section.id}} {
+    padding-top: {{_section.padding_top}}px;
+    padding-bottom: {{_section.padding_bottom}}px;
+    background-color: {{_section.bg_color}};
+  }
+
+  .section-text-with-gallery--{{section.id}} .section__title {
+    font-size: {{_section.title_font_size}}px;
+  }
+
+  .section-text-with-gallery--{{section.id}} .section__inner {
+    align-items: {{_section.vertical_align}};
+  }
+
+  .section-text-with-gallery--{{section.id}} .section__content {
+    text-align: {{_section.text_align}};
+  }
+
+  @media(max-width: 767px) {
+    .section-text-with-gallery--{{section.id}} {
+      padding-top: {{_section.padding_top_mobile}}px;
+      padding-bottom: {{_section.padding_bottom_mobile}}px;
+    }
+
+    .section-text-with-gallery--{{section.id}} .section__title {
+      font-size: {{_section.title_font_size_mobile}}px;
+    }
+  }
+</style>
+
+<section class="section-text-with-gallery section-text-with-gallery--{{section.id}} {% if _section.reverse %} section-text-with-gallery--reverse {% endif %} {% if _section.full_width %} section-text-with-gallery--fullwidth {% endif %}">
+  <div class="shell">
+    <div class="section__inner">
+      <div class="section__content">
+        <div class="section__content-inner">
+          {% if _section.title != blank %}
+            <h2 class="section__title">
+              {{- _section.title -}}
+            </h2>
+            <!-- /.section__title -->
+          {% endif %}
+
+          {% if _section.content != blank %}
+            <div class="section__entry">
+              {{- _section.content -}}
+            </div>
+            <!-- /.section__entry -->
+          {% endif %}
+
+          {% if _section.btn_text != blank and _section.btn_url != blank %}
+            <div class="section__actions">
+              <a href="{{- _section.btn_url -}}" class="button">
+                {{- _section.btn_text -}}
+              </a>
+            </div>
+            <!-- /.section__actions -->
+          {% endif %}
+        </div>
+        <!-- /.section__content-inner -->
+      </div>
+      <!-- /.section__content -->
+
+      <div class="section__images">
+        <div class="section__images-inner">
+          <div class="section__images-wrapper">
+            <slider-gallery data-effect="{{- _section.effect -}}" data-autoplay="{{- _section.autoplay -}}" data-speed="{{- _section.autoplay_speed | times: 1000 -}}">
+              <div class="swiper">
+                <div class="swiper-wrapper">
+                  {% for block in _blocks %}
+                    {%- assign _block = block.settings -%}
+
+                    <div class="swiper-slide">
+                      <div class="slider__image">
+                        <img src="{{- _block.image | image_url: width: 1100 -}}" alt="{{- _block.image.alt -}}">
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+                <!-- /.swiper-wrapper -->
+              </div>
+              <!-- /.swiper -->
+
+              <div class="swiper-button-prev {% if _section.hide_arrows %} hidden {% endif %}">
+                {%- render 'icons' icon: 'chevron-left', size: '20x20' -%}
+              </div>
+
+              <div class="swiper-button-next {% if _section.hide_arrows %} hidden {% endif %}">
+                {%- render 'icons' icon: 'chevron-right', size: '20x20' -%}
+              </div>
+            </slider-gallery>
+          </div>
+          <!-- /.section__images-wrapper -->
+        </div>
+        <!-- /.section__images-inner -->
+      </div>
+      <!-- /.section__images -->
+    </div>
+    <!-- /.section__inner -->
+  </div>
+  <!-- /.shell -->
+</section>
+<!-- /.section-text-with-gallery -->
+
+{% schema %}
+{
+  "name": "Text With Gallery",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Options"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Gallery Full Width",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "reverse",
+      "label": "Switch Gallery/Content",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Spacing Options"
+    },
+    {
+      "type": "number",
+      "id": "padding_top",
+      "label": "Padding Top - Desktop",
+      "default": 64
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom",
+      "label": "Padding Bottom - Desktop",
+      "default": 64
+    },
+    {
+      "type": "number",
+      "id": "padding_top_mobile",
+      "label": "Padding Top - Mobile",
+      "default": 36
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "radio",
+      "id": "vertical_align",
+      "label": "Text Vertical Align",
+      "options": [
+        { "value": "flex-start", "label": "Top" },
+        { "value": "center", "label": "Middle" },
+        { "value": "flex-end", "label": "Bottom" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "radio",
+      "id": "text_align",
+      "label": "Text Hoizontal Align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "textarea",
+      "id": "title",
+      "label": "Title",
+      "default": "Section title goes here"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Title font size - Desktop",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "title_font_size_mobile",
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Title font size - Mobile",
+      "default": 30
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Text Content",
+      "default": "<p>Text content goes here.</p>"
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Button Text",
+      "default": "Button Text"
+    },
+    {
+      "type": "url",
+      "id": "btn_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "header",
+      "content": "Slider Options"
+    },
+    {
+      "type": "select",
+      "id": "effect",
+      "label": "Slide Effect",
+      "options": [
+          {
+            "value": "fade",
+            "label": "Fade"
+          },
+          {
+            "value": "slide",
+            "label": "Slide"
+          }
+        ],
+        "default": "fade"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "unit": "sec",
+      "label": "Autoplay Speed",
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_arrows",
+      "label": "Hide Arrows",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text With Gallery",
+      "category": "Sections"
+    }
+  ]
+}
+{% endschema %}
